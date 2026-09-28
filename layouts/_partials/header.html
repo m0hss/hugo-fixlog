@@ -1,0 +1,18 @@
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="logo" href="{{ "/" | relURL }}"><span class="logo-mark">&gt;_</span> {{ site.Title | lower }}</a>
+    <nav class="nav" aria-label="Main">
+      {{ range site.Menus.main }}
+      <a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+    <div class="header-actions">
+      <button class="kbd-btn" type="button" data-palette-open aria-label="Search">
+        <span>Search</span><kbd>⌘K</kbd>
+      </button>
+      {{ with site.Home.OutputFormats.Get "rss" }}
+      <a class="icon-btn" href="{{ .RelPermalink }}" aria-label="RSS feed">RSS</a>
+      {{ end }}
+    </div>
+  </div>
+</header>

@@ -1,0 +1,22 @@
+{{ define "main" }}
+<article class="post">
+  <header class="post-head">
+    <p class="card-meta mono">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      <span>·</span><span>{{ .ReadingTime }} min read</span>
+      {{ partial "badge.html" .Params.outcome }}
+    </p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.summary }}<p class="lede">{{ . }}</p>{{ end }}
+    {{ partial "tags.html" . }}
+  </header>
+  {{ if and (gt .WordCount 400) .TableOfContents }}
+  <aside class="toc card"><p class="mono eyebrow">On this page</p>{{ .TableOfContents }}</aside>
+  {{ end }}
+  <div class="prose">{{ .Content }}</div>
+  <nav class="post-nav mono">
+    {{ with .NextInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+    {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+  </nav>
+</article>
+{{ end }}

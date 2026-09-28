@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{ $d := site.Data.status }}
+<header class="page-head">
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+  {{ if $d.sample }}<p class="notice mono">Sample data. Replace data/status.yaml with verified facts.</p>{{ end }}
+</header>
+<div class="grid grid-tight">
+  {{ range $d.services }}
+  <div class="card status-row">
+    <span class="status-dot status-{{ .state }}"></span>
+    <div><h3 class="card-title">{{ .name }}</h3>{{ with .note }}<p class="muted">{{ . }}</p>{{ end }}</div>
+    <span class="mono status-label">{{ .state }}</span>
+  </div>
+  {{ end }}
+</div>
+{{ with $d.incidents }}
+<section>
+  <div class="section-head"><h2>Incidents</h2></div>
+  {{ range . }}
+  <article class="card incident">
+    <p class="card-meta mono"><span>{{ .date }}</span><span>·</span><span>{{ .service }}</span><span class="badge badge-{{ cond (eq .status "resolved") "lime" "amber" }}"><span class="dot"></span>{{ .status }}</span></p>
+    <h3 class="card-title">{{ .title }}</h3>
+    <dl class="facts">
+      <dt>Impact</dt><dd>{{ .impact }}</dd>
+      {{ with .fix }}<dt>Fix</dt><dd>{{ . }}</dd>{{ end }}
+    </dl>
+  </article>
+  {{ end }}
+</section>
+{{ end }}
+{{ .Content }}
+{{ end }}

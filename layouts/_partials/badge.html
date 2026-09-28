@@ -1,0 +1,8 @@
+{{- $map := dict
+  "worked" (dict "label" "Worked" "class" "lime")
+  "failed" (dict "label" "Didn't work" "class" "coral")
+  "in-progress" (dict "label" "In progress" "class" "amber")
+  "poking" (dict "label" "Still poking" "class" "violet") -}}
+{{- with index $map (. | default "") -}}
+<span class="badge badge-{{ .class }}"><span class="dot"></span>{{ .label }}</span>
+{{- end -}}

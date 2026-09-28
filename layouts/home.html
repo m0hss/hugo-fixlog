@@ -1,0 +1,30 @@
+{{ define "main" }}
+<section class="hero">
+  <p class="mono eyebrow">~/fixlog <span class="caret">▍</span></p>
+  <h1>{{ with .Params.tagline }}{{ . }}{{ else }}{{ site.Title }}{{ end }}</h1>
+  <p class="lede">{{ site.Params.description }}</p>
+</section>
+
+{{ $posts := where site.RegularPages "Section" "posts" }}
+{{ with index $posts 0 }}
+<section class="featured">
+  <p class="mono eyebrow">Latest entry</p>
+  <article class="card card-featured">
+    <div class="card-meta mono">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{ partial "badge.html" .Params.outcome }}
+    </div>
+    <h2 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    {{ with .Summary }}<p class="card-summary">{{ . | plainify }}</p>{{ end }}
+    {{ partial "tags.html" . }}
+  </article>
+</section>
+{{ end }}
+
+<section>
+  <div class="section-head"><h2>Recent</h2><a class="mono" href="{{ "posts/" | relURL }}">all posts →</a></div>
+  <div class="grid">
+    {{ range after 1 (first 7 $posts) }}{{ partial "post-card.html" . }}{{ end }}
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,12 @@
+name = "Fixlog"
+license = "MIT"
+licenselink = "https://github.com/m0hss/fixlog/blob/main/themes/fixlog/LICENSE"
+description = "A dark 'terminal x lab notebook' theme for dev logs, with outcome badges, a command palette, and a status page."
+homepage = "https://github.com/m0hss/fixlog"
+tags = ["blog", "dark", "developer", "minimal", "personal"]
+features = ["outcome badges", "command palette search", "RSS", "status page", "tags"]
+min_version = "0.146.0"
+
+[author]
+  name = "Sassi"
+  homepage = "https://github.com/m0hss"

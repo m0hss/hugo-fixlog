@@ -1,0 +1,8 @@
+<div class="palette" id="palette" hidden data-index="{{ with site.Home.OutputFormats.Get "json" }}{{ .RelPermalink }}{{ end }}">
+  <div class="palette-backdrop" data-palette-close></div>
+  <div class="palette-box" role="dialog" aria-modal="true" aria-label="Search posts">
+    <input class="palette-input mono" type="search" placeholder="Search posts, tags…" autocomplete="off">
+    <ul class="palette-results" role="listbox"></ul>
+    <div class="palette-hint mono">↑↓ to move · ↵ to open · esc to close</div>
+  </div>
+</div>

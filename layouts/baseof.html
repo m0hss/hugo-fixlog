@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode | default "en" }}">
+<head>{{ partial "head.html" . }}</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+  {{ partial "header.html" . }}
+  <main class="wrap">{{ block "main" . }}{{ end }}</main>
+  {{ partial "footer.html" . }}
+  {{ partial "palette.html" . }}
+</body>
+</html>

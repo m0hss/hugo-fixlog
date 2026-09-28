@@ -1,0 +1,10 @@
+<article class="card">
+  <div class="card-meta mono">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    <span>·</span><span>{{ .ReadingTime }} min</span>
+    {{ partial "badge.html" .Params.outcome }}
+  </div>
+  <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  {{ with .Summary }}<p class="card-summary">{{ . | plainify }}</p>{{ end }}
+  {{ partial "tags.html" . }}
+</article>
