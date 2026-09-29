@@ -418,8 +418,9 @@ a.card:hover, .card.is-link:hover { border-color: var(--line-2); background: var
 .curl code b { color: var(--lime); font-weight: 400; }
 .foot-links { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font: 500 .6875rem var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--soft); }
 .foot-links .sep { color: var(--steel); }
-.rss { color: var(--violet-soft); } .rss:hover { color: var(--violet); }
-.rss .arr { display: inline-block; transition: transform .15s; } .rss:hover .arr { transform: translateX(3px); }
+.foot-icons { display: inline-flex; gap: 6px; }
+.foot-icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted); transition: color .15s, border-color .15s, box-shadow .15s; }
+.foot-icon:hover { color: var(--lime); border-color: rgba(198,255,61,.35); box-shadow: 0 0 12px -4px rgba(198,255,61,.4); }
 .disclaimer { padding: 0 32px 20px; font: 400 .6875rem var(--font-mono); color: var(--steel); }
 @media (max-width: 767px) { .footer-row, .disclaimer { padding-left: 16px; padding-right: 16px; } }
 
