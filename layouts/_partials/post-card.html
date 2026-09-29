@@ -1,10 +1,17 @@
-<article class="card">
-  <div class="card-meta mono">
-    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
-    <span>·</span><span>{{ .ReadingTime }} min</span>
-    {{ partial "badge.html" .Params.outcome }}
+{{- /* ctx: dict "page" . "size" ("featured"|"wide"|"") */ -}}
+{{- $p := .page -}}
+{{- $o := $p.Params.outcome | default "" -}}
+{{- $big := ne (.size | default "") "" -}}
+<article class="card is-link o-{{ $o }}{{ with .size }} {{ . }}{{ end }}" data-outcome="{{ $o }}">
+  <div class="entry-meta">
+    <span class="label"><b>Entry #{{ partialCached "entry-num.html" $p $p.RelPermalink }}</b> // {{ $p.Date.Format (cond $big "Jan 02, 2006" "Jan 02") }}{{ if $big }} // {{ $p.ReadingTime }} min read{{ end }}</span>
+    {{ partial "badge.html" $o }}
   </div>
-  <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-  {{ with .Summary }}<p class="card-summary">{{ . | plainify }}</p>{{ end }}
-  {{ partial "tags.html" . }}
+  <h3 class="card-title"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
+  {{ with $p.Summary }}<p class="card-summary">{{ . | plainify }}</p>{{ end }}
+  {{ partial "card-extra.html" $p }}
+  <div class="card-foot">
+    {{ partial "tags.html" $p }}
+    {{ if $big }}<a class="read-link" href="{{ $p.RelPermalink }}" tabindex="-1">Read log →</a>{{ else }}<span class="read-min">{{ $p.ReadingTime }} min</span>{{ end }}
+  </div>
 </article>

@@ -1,0 +1,6 @@
+{{- /* Ordered outcome list used by filters. */ -}}
+{{- return (slice
+  (dict "key" "worked" "label" "Worked")
+  (dict "key" "failed" "label" "Didn't work")
+  (dict "key" "in-progress" "label" "In progress")
+  (dict "key" "poking" "label" "Still poking")) -}}

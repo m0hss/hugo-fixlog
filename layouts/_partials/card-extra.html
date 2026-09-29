@@ -1,0 +1,16 @@
+{{- /* Optional front matter: metrics (list of {label,value,note,up}), snippet ({file,code,tag}), note ({label,text}). */ -}}
+{{- with .Params.metrics -}}
+<div class="metrics">
+  {{ range first 3 . }}<div class="metric"><div class="label">{{ .label }}</div><div class="v">{{ .value }}</div>{{ with .note }}<div class="n">{{ . }}</div>{{ end }}</div>{{ end }}
+</div>
+{{- end -}}
+{{- with .Params.snippet -}}
+<div class="snippet">
+  <div class="cap"><span>{{ with .file }}// {{ . }}{{ end }}</span>{{ with .tag }}<span class="lime">{{ . }}</span>{{ end }}</div>
+  <pre>{{ .code }}</pre>
+</div>
+{{- end -}}
+{{- with .Params.note -}}
+{{- $cls := dict "failed" "" "poking" "v" "in-progress" "a" "worked" "l" -}}
+<div class="note-box {{ index $cls ($.Params.outcome | default "failed") }}"><span class="label">{{ .label | default "Note" }}</span>{{ .text }}</div>
+{{- end -}}

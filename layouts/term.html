@@ -1,9 +1,1 @@
-{{ define "main" }}
-<header class="page-head">
-  <p class="mono eyebrow">tag</p>
-  <h1>#{{ .Title }}</h1>
-  <p class="lede">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "entry" "entries" }}</p>
-</header>
-<div class="grid">{{ range .Paginator.Pages }}{{ partial "post-card.html" . }}{{ end }}</div>
-{{ partial "pagination.html" . }}
-{{ end }}
+{{ define "main" }}{{ partial "archive.html" (dict "page" . "pages" .Pages "active" .LinkTitle) }}{{ end }}

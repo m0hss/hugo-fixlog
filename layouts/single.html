@@ -1,22 +1,54 @@
 {{ define "main" }}
-<article class="post">
-  <header class="post-head">
-    <p class="card-meta mono">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-      <span>·</span><span>{{ .ReadingTime }} min read</span>
+{{ $num := partialCached "entry-num.html" . .RelPermalink }}
+<div class="wrap post-wrap">
+  <article class="post-main">
+    <nav class="back">
+      <a href="{{ with .Parent }}{{ .RelPermalink }}{{ else }}{{ "/" | relURL }}{{ end }}">← Back to log entries</a>
+      <span>//</span><span class="id">Entry #{{ $num }}</span><span>//</span><span class="slug">{{ .File.ContentBaseName }}</span>
+    </nav>
+    <p class="post-meta">
       {{ partial "badge.html" .Params.outcome }}
+      <span>//</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+      <span>//</span><span>{{ .ReadingTime }} min read</span>
+      <span>//</span><b>{{ .Params.author | default site.Params.author }}</b>
     </p>
-    <h1>{{ .Title }}</h1>
-    {{ with .Params.summary }}<p class="lede">{{ . }}</p>{{ end }}
-    {{ partial "tags.html" . }}
-  </header>
-  {{ if and (gt .WordCount 400) .TableOfContents }}
-  <aside class="toc card"><p class="mono eyebrow">On this page</p>{{ .TableOfContents }}</aside>
-  {{ end }}
-  <div class="prose">{{ .Content }}</div>
-  <nav class="post-nav mono">
-    {{ with .NextInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
-    {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
-  </nav>
-</article>
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{ with .GetTerms "tags" }}<ul class="post-tags">{{ range . }}<li><a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a></li>{{ end }}</ul>{{ end }}
+
+    <div class="prose">{{ .Content }}</div>
+
+    {{ with .Params.sources }}
+    <section class="sources" id="sources">
+      <h2>Sources &amp; references <span class="label">ref_chain</span></h2>
+      <ul>
+        {{ range . }}
+        <li><span class="k">{{ .kind | default "link" }}</span><span>{{ if .url }}<a href="{{ .url }}">{{ .ref | default .url }}</a>{{ else }}{{ .ref }}{{ end }}{{ with .note }} — {{ . }}{{ end }}</span></li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+
+    <nav class="post-nav">
+      {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">← Entry #{{ partialCached "entry-num.html" . .RelPermalink }}: {{ .Title }}</a>{{ end }}
+      {{ with .NextInSection }}<a class="next" href="{{ .RelPermalink }}">Entry #{{ partialCached "entry-num.html" . .RelPermalink }}: {{ .Title }} →</a>{{ end }}
+    </nav>
+  </article>
+
+  <aside class="post-side">
+    <div class="side-stick">
+      {{ if .TableOfContents }}{{ if ne (trim .TableOfContents " \n") `<nav id="TableOfContents"></nav>` }}
+      <div class="side-card toc"><div class="label"><span>Contents</span><span class="lime">{{ len (findRE `<h2[^>]*>` .Content) }} sections</span></div>{{ .TableOfContents }}</div>
+      {{ end }}{{ end }}
+      {{ with .Params.facts }}
+      <div class="side-card"><div class="label"><span>Run facts</span></div>
+        <dl class="facts">{{ range . }}<div><dt>{{ .label }}</dt><dd>{{ .value }}</dd></div>{{ end }}</dl>
+      </div>
+      {{ end }}
+      <div class="side-card author-card">
+        {{ with site.Params.avatar }}<img class="avatar" src="{{ . | relURL }}" alt="" width="40" height="40">{{ end }}
+        <div><b>{{ site.Params.author }} // Log author</b><span>{{ site.Params.authorRole | default "Builder, breaker, note-taker" }}</span></div>
+      </div>
+    </div>
+  </aside>
+</div>
 {{ end }}

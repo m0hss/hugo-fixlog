@@ -1,0 +1,9 @@
+{{- /* ctx: slice of pages. Client-side filter for elements with data-outcome. */ -}}
+{{- $pages := . -}}
+<div class="chip-bar" role="group" aria-label="Filter by outcome">
+  <button class="chip" type="button" data-filter="" aria-pressed="true">All logs <span class="n">({{ len $pages }})</span></button>
+  {{ range partial "outcomes.html" . }}
+  {{ $n := len (where $pages "Params.outcome" .key) }}
+  <button class="chip" type="button" data-filter="{{ .key }}" aria-pressed="false"><span class="dot d-{{ .key }}"></span>{{ .label }} <span class="n">({{ $n }})</span></button>
+  {{ end }}
+</div>

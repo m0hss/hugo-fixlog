@@ -1,0 +1,7 @@
+{{- /* Entry number: front matter `entry`, else position in chronological order. */ -}}
+{{- $n := .Params.entry -}}
+{{- if not $n -}}
+  {{- $all := (where site.RegularPages "Section" "posts").ByDate -}}
+  {{- range $i, $p := $all -}}{{- if eq $p $ -}}{{- $n = add $i 1 -}}{{- end -}}{{- end -}}
+{{- end -}}
+{{- return (printf "%03d" (int $n)) -}}

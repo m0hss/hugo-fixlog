@@ -1,0 +1,11 @@
+{{- $lang := .Type | default "text" -}}
+{{- $file := .Attributes.file | default .Attributes.title -}}
+<div class="codeblock">
+  <div class="codeblock-bar">
+    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="file">{{ $file }}</span>
+    <span class="lang">{{ $lang }}</span>
+    <button class="copy-btn" type="button" data-copy>Copy</button>
+  </div>
+  {{- transform.Highlight .Inner $lang .Options -}}
+</div>

@@ -1,6 +1,13 @@
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <span class="mono">© {{ now.Year }} {{ site.Params.author }}</span>
-    <span class="muted">{{ site.Params.footer }}</span>
+    <div class="curl">
+      {{ with site.Home.OutputFormats.Get "json" }}<code><b>$</b> curl -sL {{ .Permalink }}</code>{{ end }}
+    </div>
+    <div class="foot-links">
+      {{ with site.Home.OutputFormats.Get "rss" }}<a class="rss" href="{{ .RelPermalink }}">[RSS feed // XML] <span class="arr">-&gt;</span></a><span class="sep">|</span>{{ end }}
+      <span>{{ site.Title }} research notebook</span><span class="sep">|</span>
+      <span>© {{ now.Year }} {{ site.Params.author }}</span>
+    </div>
   </div>
+  {{ with site.Params.footer }}<p class="wrap disclaimer">{{ . }}</p>{{ end }}
 </footer>

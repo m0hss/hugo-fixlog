@@ -1,0 +1,11 @@
+{{- $cur := partial "nav-current.html" . -}}
+{{- $icons := dict
+  "home" `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/></svg>`
+  "log" `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>`
+  "archive" `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v4H4zM6 9v10h12V9M10 13h4"/></svg>`
+  "status" `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>` -}}
+<nav class="tabbar" aria-label="Main">
+  {{ range site.Menus.main }}
+  <a href="{{ .URL }}"{{ if eq $cur .Identifier }} aria-current="page"{{ end }}>{{ index $icons .Identifier | safeHTML }}{{ .Name }}</a>
+  {{ end }}
+</nav>

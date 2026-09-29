@@ -1,6 +1,6 @@
 {{ $p := .Paginator }}
 {{ if gt $p.TotalPages 1 }}
-<nav class="pager mono" aria-label="Pagination">
+<nav class="pager" aria-label="Pagination">
   {{ with $p.Prev }}<a href="{{ .URL }}">← newer</a>{{ end }}
   <span>{{ $p.PageNumber }} / {{ $p.TotalPages }}</span>
   {{ with $p.Next }}<a href="{{ .URL }}">older →</a>{{ end }}

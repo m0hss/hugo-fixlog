@@ -1,0 +1,22 @@
+{{ define "main" }}
+{{ $pages := .RegularPages }}
+<div class="wrap">
+  <header class="page-head">
+    <div>
+      <p class="crumb"><b>&gt;&gt;</b> index://root/{{ .Section }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="stat-box"><span class="label">Total entries</span><strong>{{ len $pages }}</strong></div>
+  </header>
+  {{ if $pages }}
+  <div class="filter-row">{{ partial "outcome-filter.html" $pages }}</div>
+  <div class="log-grid" data-filter-target>
+    {{ range .Paginator.Pages }}{{ partial "post-card.html" (dict "page" .) }}{{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+  {{ else }}
+  <div class="card empty">Nothing logged here yet.</div>
+  {{ end }}
+</div>
+{{ end }}

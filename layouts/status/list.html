@@ -1,33 +1,73 @@
 {{ define "main" }}
 {{ $d := site.Data.status }}
-<header class="page-head">
-  <h1>{{ .Title }}</h1>
-  {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
-  {{ if $d.sample }}<p class="notice mono">Sample data. Replace data/status.yaml with verified facts.</p>{{ end }}
-</header>
-<div class="grid grid-tight">
-  {{ range $d.services }}
-  <div class="card status-row">
-    <span class="status-dot status-{{ .state }}"></span>
-    <div><h3 class="card-title">{{ .name }}</h3>{{ with .note }}<p class="muted">{{ . }}</p>{{ end }}</div>
-    <span class="mono status-label">{{ .state }}</span>
+{{ $svcs := $d.services | default slice }}
+{{ $down := where $svcs "state" "outage" }}
+{{ $deg := where $svcs "state" "degraded" }}
+{{ $open := where ($d.incidents | default slice) "status" "ne" "resolved" }}
+{{ $cls := "" }}{{ $headline := "All systems operational" }}
+{{ if $down }}{{ $cls = "bad" }}{{ $headline = "Partial outage" }}{{ else if $deg }}{{ $cls = "warn" }}{{ $headline = "Degraded performance" }}{{ end }}
+<div class="wrap"><div class="status-wrap">
+  <section class="card status-hero {{ $cls }}">
+    <div class="sh-top">
+      <span class="big-dot" aria-hidden="true"></span>
+      <div>
+        <h1>{{ $headline }}</h1>
+        <p>{{ .Description }}</p>
+      </div>
+    </div>
+    <div class="sh-facts">
+      <div><div class="label">Services tracked</div><div class="v">{{ len $svcs }}</div></div>
+      <div><div class="label">Open incidents</div><div class="v {{ if $open }}violet{{ else }}lime{{ end }}">{{ len $open }} active</div></div>
+      {{ with $d.updated }}<div><div class="label">Last verified</div><div class="v">{{ . }}</div></div>{{ end }}
+    </div>
+    {{ if $d.sample }}<p class="notice">Sample data. Replace data/status.yaml with verified facts.</p>{{ end }}
+  </section>
+
+  <div class="sec-head"><span><b>//</b> Services</span>{{ with $d.window }}<span>Window: {{ . }}</span>{{ end }}</div>
+  <div class="svc-list">
+    {{ range $svcs }}
+    <article class="card">
+      <div class="svc-top">
+        <div>
+          <h3>{{ with .url }}<a href="{{ . }}">{{ end }}{{ .name }}{{ with .url }}</a>{{ end }} <span class="badge state-{{ .state }}">{{ .state }}</span></h3>
+          {{ with .description }}<p>{{ . }}</p>{{ end }}
+        </div>
+        {{ with .probe }}<div class="svc-probe">{{ . }}</div>{{ end }}
+      </div>
+      {{ with .history }}
+      <div class="bars-meta"><span>{{ len . }} days ago</span><span class="lime">Today</span></div>
+      <div class="bars" aria-label="Daily status history">{{ range . }}<i class="{{ if ne . "operational" }}{{ . }}{{ end }}" title="{{ . }}"></i>{{ end }}</div>
+      {{ end }}
+      {{ if or .uptime .note }}
+      <div class="svc-foot">
+        {{ with .uptime }}<span><b>{{ . }}</b> uptime</span>{{ end }}
+        {{ with .note }}<span class="host">{{ . }}</span>{{ end }}
+      </div>
+      {{ end }}
+    </article>
+    {{ end }}
   </div>
-  {{ end }}
-</div>
-{{ with $d.incidents }}
-<section>
-  <div class="section-head"><h2>Incidents</h2></div>
-  {{ range . }}
+
+  {{ with $d.incidents }}
+  <div class="sec-head"><span><b>//</b> Incident &amp; diagnostic log</span><span class="policy"><b>✓</b> Policy: verified facts only. No speculation.</span></div>
+  {{ range sort . "date" "desc" }}
   <article class="card incident">
-    <p class="card-meta mono"><span>{{ .date }}</span><span>·</span><span>{{ .service }}</span><span class="badge badge-{{ cond (eq .status "resolved") "lime" "amber" }}"><span class="dot"></span>{{ .status }}</span></p>
-    <h3 class="card-title">{{ .title }}</h3>
-    <dl class="facts">
-      <dt>Impact</dt><dd>{{ .impact }}</dd>
-      {{ with .fix }}<dt>Fix</dt><dd>{{ . }}</dd>{{ end }}
-    </dl>
+    <div class="inc-top">
+      <div>
+        <h3>{{ .title }} <span class="badge state-{{ .status }}">{{ .status }}</span></h3>
+        <div class="inc-id">{{ with .id }}{{ . }} // {{ end }}{{ .service }} // {{ .date }}</div>
+      </div>
+      {{ with .duration }}<span class="inc-dur">Impact window: {{ . }}</span>{{ end }}
+    </div>
+    <div class="inc-grid">
+      <div><span class="label">Verified impact</span>{{ .impact }}</div>
+      <div><span class="label">Cause</span>{{ if .cause_confirmed }}{{ .cause }}{{ else }}<span class="unconfirmed">Not confirmed yet{{ with .cause }}: {{ . }}{{ end }}</span>{{ end }}</div>
+      {{ with .fix }}<div><span class="label">Fix</span>{{ . }}</div>{{ end }}
+      {{ with .evidence }}<div><span class="label">Evidence</span><span class="confirmed">{{ . }}</span></div>{{ end }}
+    </div>
   </article>
   {{ end }}
-</section>
-{{ end }}
-{{ .Content }}
+  {{ end }}
+  {{ .Content }}
+</div></div>
 {{ end }}

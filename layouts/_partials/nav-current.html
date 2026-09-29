@@ -1,0 +1,8 @@
+{{- /* Returns the identifier of the main-menu item the current page belongs to. */ -}}
+{{- $id := "" -}}
+{{- if .IsHome -}}{{ $id = "home" }}
+{{- else if eq .Section "posts" -}}{{ $id = "log" }}
+{{- else if or (eq .Section "archive") (eq .Type "tags") -}}{{ $id = "archive" }}
+{{- else if eq .Section "status" -}}{{ $id = "status" }}
+{{- end -}}
+{{- return $id -}}

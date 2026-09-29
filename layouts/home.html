@@ -1,30 +1,34 @@
 {{ define "main" }}
-<section class="hero">
-  <p class="mono eyebrow">~/fixlog <span class="caret">▍</span></p>
-  <h1>{{ with .Params.tagline }}{{ . }}{{ else }}{{ site.Title }}{{ end }}</h1>
-  <p class="lede">{{ site.Params.description }}</p>
-</section>
-
 {{ $posts := where site.RegularPages "Section" "posts" }}
-{{ with index $posts 0 }}
-<section class="featured">
-  <p class="mono eyebrow">Latest entry</p>
-  <article class="card card-featured">
-    <div class="card-meta mono">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
-      {{ partial "badge.html" .Params.outcome }}
-    </div>
-    <h2 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-    {{ with .Summary }}<p class="card-summary">{{ . | plainify }}</p>{{ end }}
-    {{ partial "tags.html" . }}
-  </article>
-</section>
-{{ end }}
+<div class="wrap">
+  <section class="hero">
+    {{ with .Params.building }}<div class="building"><span class="pulse"></span>Currently building: <b>{{ . }}</b></div>{{ end }}
+    <h1>{{ .Params.tagline | default site.Title }}<span class="cursor" aria-hidden="true"></span></h1>
+    <p class="lede">{{ with .Params.intro }}{{ . | markdownify }}{{ else }}{{ site.Params.description }}{{ end }}</p>
+  </section>
 
-<section>
-  <div class="section-head"><h2>Recent</h2><a class="mono" href="{{ "posts/" | relURL }}">all posts →</a></div>
-  <div class="grid">
-    {{ range after 1 (first 7 $posts) }}{{ partial "post-card.html" . }}{{ end }}
+  {{ if $posts }}
+  <div class="filter-row">
+    {{ partial "outcome-filter.html" $posts }}
+    <span class="query-hint">QUERY: grep --status=* /var/log/fixlog/</span>
   </div>
-</section>
+  <div class="log-grid" data-filter-target>
+    {{ range $i, $p := first 6 $posts }}
+      {{ $size := "" }}
+      {{ if eq $i 0 }}{{ $size = "featured" }}{{ else if eq $i 5 }}{{ $size = "wide" }}{{ end }}
+      {{ partial "post-card.html" (dict "page" $p "size" $size) }}
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="card empty">No entries yet. <code>hugo new posts/first-log.md</code></div>
+  {{ end }}
+
+  <section class="card cta">
+    <div class="cta-l">
+      <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/></svg>
+      <div><h2>Want the whole trail?</h2><p>Every entry, grouped by year and filterable by tag and outcome. Also available as JSON and RSS.</p></div>
+    </div>
+    <a class="btn btn-primary" href="{{ "archive/" | relURL }}">Explore full archive ↗</a>
+  </section>
+</div>
 {{ end }}

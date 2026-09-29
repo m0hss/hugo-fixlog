@@ -1,0 +1,61 @@
+{{- /* ctx: dict "page" . "pages" slice "active" tag-name-or-"" */ -}}
+{{- $pages := .pages.ByDate.Reverse -}}
+{{- $active := .active | default "" -}}
+<div class="wrap" data-archive>
+  <header class="page-head">
+    <div>
+      <p class="crumb"><b>&gt;&gt;</b> index://root/archive <i>:: {{ with $active }}#{{ . }}{{ else }}chrono_map{{ end }}</i></p>
+      <h1>{{ if $active }}#{{ $active }}{{ else }}Tags &amp; Chronological Archive{{ end }}</h1>
+      <p>{{ if $active }}Every entry tagged #{{ $active }}.{{ else }}Filterable index of all field notes, experiments, and postmortems by year and topic.{{ end }}</p>
+    </div>
+    <div class="stat-box"><span class="label">Total entries</span><strong>{{ len $pages }}</strong></div>
+  </header>
+
+  <div class="archive-panel">
+    <label class="grep"><span class="p">&gt;_ grep -i</span><input type="search" data-grep placeholder='"query" archive... [e.g. hugo, llm, sqlite]' aria-label="Filter entries"><kbd>ESC</kbd></label>
+    <div>
+      <div class="panel-row"><span class="label">// Topic chips</span><span class="label" data-selected>Selected: #{{ $active | default "all" }}</span></div>
+      <div class="topic-chips" style="margin-top:8px">
+        <a class="topic" href="{{ "archive/" | relURL }}" aria-pressed="{{ not $active }}">#all<span class="n">({{ len (where site.RegularPages "Section" "posts") }})</span></a>
+        {{ range site.Taxonomies.tags.ByCount }}
+        <a class="topic" href="{{ .Page.RelPermalink }}" aria-pressed="{{ eq .Page.LinkTitle $active }}">#{{ .Page.LinkTitle }}<span class="n">({{ .Count }})</span></a>
+        {{ end }}
+      </div>
+    </div>
+    <div class="panel-row outcome-row">
+      <span class="label">Execution result:</span>
+      <div class="chips" role="group" aria-label="Filter by outcome">
+        <button class="chip" type="button" data-filter="" aria-pressed="true">All outcomes</button>
+        {{ range partial "outcomes.html" . }}<button class="chip" type="button" data-filter="{{ .key }}" aria-pressed="false"><span class="dot d-{{ .key }}"></span>{{ .label }}</button>{{ end }}
+      </div>
+    </div>
+  </div>
+
+  <div data-filter-target>
+  {{ range $pages.GroupByDate "2006" }}
+  <section class="year-block" data-year>
+    <div class="year-head"><h2>{{ .Key }} <span class="count">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "note" "notes" }} in {{ .Key }}</span></h2></div>
+    <div class="rows">
+      {{ range .Pages }}
+      {{ $o := .Params.outcome | default "" }}
+      <article class="row" data-outcome="{{ $o }}" data-text="{{ lower (delimit (slice .Title (.Summary | plainify) (delimit (.Params.tags | default slice) " ")) " ") }}">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02" }}</time>
+        <div>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <div class="sub">{{ range .Params.tags }}#{{ . }} · {{ end }}{{ .ReadingTime }} min read</div>
+        </div>
+        {{ partial "badge.html" $o }}
+        <span class="arrow" aria-hidden="true">→</span>
+      </article>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+  </div>
+  <p class="card empty" data-no-results hidden>No entries match that grep.</p>
+
+  <div class="index-foot">
+    <span><span class="lime">●</span> Filter engine: substring // client-side</span>
+    <span>Showing <b data-shown>{{ len $pages }}</b> of {{ len $pages }} logs &nbsp; {{ with site.Home.OutputFormats.Get "json" }}<a class="violet" href="{{ .RelPermalink }}">[EXPORT_INDEX_JSON]</a>{{ end }}</span>
+  </div>
+</div>
