@@ -192,7 +192,8 @@ a.card:hover, .card.is-link:hover { border-color: var(--line-2); background: var
 .card-foot { margin-top: auto; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .card-foot .tags, .card-foot a { position: relative; z-index: 1; }
 .read-min { font: 500 .6875rem var(--font-mono); color: var(--muted); white-space: nowrap; }
-.read-link { font: 600 .75rem var(--font-mono); color: #fff; }
+.read-link { font: 600 .75rem var(--font-mono); color: #fff; transition: color .15s ease-out; }
+.read-link:hover, .read-link:focus-visible { color: var(--lime); }
 .card[hidden] { display: none; }
 
 /* Optional card extras: metrics + snippet + note */
