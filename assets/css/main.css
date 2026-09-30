@@ -79,6 +79,11 @@ button { font: inherit; color: inherit; }
 .search-trigger:hover { color: var(--muted); }
 .search-trigger span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 kbd { font: 500 .6875rem var(--font-mono); padding: 1px 5px; border-radius: 4px; background: var(--surface-3); color: var(--muted); box-shadow: 0 1px 0 rgba(0,0,0,.6); }
+.kbd-shortcut { display: inline-flex; align-items: center; gap: 2px; flex: none; white-space: nowrap; }
+.kbd-cmd { width: 1.15em; height: 1.15em; }
+.kbd-ctrl { display: none; margin-right: 1px; }
+.not-mac .kbd-cmd { display: none; }
+.not-mac .kbd-ctrl { display: inline; }
 .header-right { display: flex; align-items: center; gap: 24px; }
 .nav { display: flex; gap: 4px; }
 .nav a { padding: 4px 8px; border-radius: 4px; font: 500 .8125rem var(--font-mono); letter-spacing: .02em; color: var(--muted); transition: color .15s, background .15s; }
