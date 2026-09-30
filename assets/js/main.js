@@ -1,9 +1,3 @@
-// Show "Ctrl" instead of ⌘ on non-Apple platforms. The shortcut itself accepts both.
-if (!/Mac|iPhone|iPad|iPod/i.test(navigator.userAgentData?.platform || navigator.platform || "")) {
-  document.documentElement.classList.add("not-mac");
-  document.querySelectorAll("[data-shortcut]").forEach((k) => k.setAttribute("aria-label", "Control K"));
-}
-
 // Command palette: ⌘K / Ctrl+K / "/" opens a search over the home JSON index.
 const root = document.getElementById("palette");
 if (root) {
