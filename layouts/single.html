@@ -10,7 +10,6 @@
       {{ partial "badge.html" .Params.outcome }}
       <span>//</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
       <span>//</span><span>{{ .ReadingTime }} min read</span>
-      <span>//</span><b>{{ .Params.author | default site.Params.author }}</b>
     </p>
     <h1 class="post-title">{{ .Title }}</h1>
     {{ with .GetTerms "tags" }}<ul class="post-tags">{{ range . }}<li><a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a></li>{{ end }}</ul>{{ end }}
@@ -46,7 +45,7 @@
       {{ end }}
       <div class="side-card author-card">
         {{ with site.Params.avatar }}<img class="avatar" src="{{ . | relURL }}" alt="" width="40" height="40">{{ end }}
-        <div><b>{{ site.Params.author }} // Log author</b><span>{{ site.Params.authorRole | default "Builder, breaker, note-taker" }}</span></div>
+        <div><b>{{ site.Params.author }}</b><span>{{ site.Params.authorRole | default "Builder, breaker, note-taker" }}</span></div>
       </div>
     </div>
   </aside>
