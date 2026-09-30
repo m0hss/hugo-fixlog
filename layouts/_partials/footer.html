@@ -1,7 +1,7 @@
 <footer class="site-footer">
   <div class="wrap footer-row">
     <div class="curl">
-      {{ with site.Home.OutputFormats.Get "json" }}<code><b>$</b> curl -sL {{ .Permalink }}</code>{{ end }}
+      {{ with site.Home.OutputFormats.Get "json" }}<code><b>$</b> curl -sL {{ with site.Params.publicURL }}{{ strings.TrimSuffix "/" . }}{{ end }}{{ .RelPermalink }}</code>{{ end }}
     </div>
     <div class="foot-links">
       <span class="foot-icons">
