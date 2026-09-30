@@ -151,7 +151,7 @@ a.card:hover, .card.is-link:hover { border-color: var(--line-2); background: var
 
 .eyebrow { font: 500 .6875rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
 .eyebrow b { color: var(--lime); font-weight: 500; }
-.cursor { display: inline-block; width: .32em; height: .8em; margin-left: .12em; background: var(--lime); vertical-align: baseline; animation: blink 1.1s steps(1) infinite; }
+.cursor { display: inline-block; width: .26em; height: .8em; margin-left: .12em; background: var(--lime); vertical-align: baseline; animation: blink 1.1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .cursor.solid { animation: none; }
 @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
