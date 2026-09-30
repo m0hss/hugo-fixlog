@@ -2,7 +2,7 @@
 
 A dark "terminal × lab notebook" theme for developers who log experiments, wins, and dead ends. Every entry carries an outcome badge: **Worked**, **Didn't work**, **In progress**, or **Still poking**.
 
-![Fixlog home](https://raw.githubusercontent.com/m0hss/fixlog/main/themes/fixlog/images/screenshot.png)
+![Fixlog home](https://raw.githubusercontent.com/m0hss/hugo-fixlog/main/images/screenshot.png)
 
 Live site: [fixlog.run](https://fixlog.run)
 
@@ -19,7 +19,7 @@ Live site: [fixlog.run](https://fixlog.run)
 
 | Post | Archive | Status |
 |---|---|---|
-| ![Post](https://raw.githubusercontent.com/m0hss/fixlog/main/themes/fixlog/images/post.png) | ![Archive](https://raw.githubusercontent.com/m0hss/fixlog/main/themes/fixlog/images/archive.png) | ![Status](https://raw.githubusercontent.com/m0hss/fixlog/main/themes/fixlog/images/status.png) |
+| ![Post](https://raw.githubusercontent.com/m0hss/hugo-fixlog/main/images/post.png) | ![Archive](https://raw.githubusercontent.com/m0hss/hugo-fixlog/main/images/archive.png) | ![Status](https://raw.githubusercontent.com/m0hss/hugo-fixlog/main/images/status.png) |
 
 ## Requirements
 
@@ -27,24 +27,31 @@ Hugo **0.146.0** or newer (the theme uses the new template system).
 
 ## Install
 
-As a Hugo module (needs Go installed):
+As a Git submodule:
+
+```bash
+git submodule add https://github.com/m0hss/hugo-fixlog.git themes/fixlog
+```
+
+Then set `theme = "fixlog"` in your `hugo.toml`.
+
+Or as a Hugo module (needs Go):
 
 ```toml
 [module]
   [[module.imports]]
-    path = "github.com/m0hss/fixlog/themes/fixlog"
+    path = "github.com/m0hss/hugo-fixlog"
 ```
-
-Or copy [`themes/fixlog/`](https://github.com/m0hss/fixlog/tree/main/themes/fixlog) into your site's `themes/` folder and set `theme = "fixlog"`.
 
 ## Quick start
 
 ```bash
-cd themes/fixlog/exampleSite
+git clone https://github.com/m0hss/hugo-fixlog.git fixlog
+cd fixlog/exampleSite
 hugo server --themesDir ../..
 ```
 
-The [exampleSite](https://github.com/m0hss/fixlog/tree/main/themes/fixlog/exampleSite) has a full config and sample content. Copy it as a starting point.
+The [exampleSite](https://github.com/m0hss/hugo-fixlog/tree/main/exampleSite) has a full config and sample content. Copy it as a starting point.
 
 ## Configuration
 
@@ -107,4 +114,4 @@ Markdown extras: `> quote` renders as the "Core lesson" callout, `- [ ]` task li
 
 ## License
 
-[MIT](https://github.com/m0hss/fixlog/blob/main/themes/fixlog/LICENSE) © 2026 Sassi. Fonts: Space Grotesk, Inter, and JetBrains Mono via Google Fonts (SIL OFL).
+[MIT](https://github.com/m0hss/hugo-fixlog/blob/main/LICENSE) © 2026 Sassi. Fonts: Space Grotesk, Inter, and JetBrains Mono via Google Fonts (SIL OFL).

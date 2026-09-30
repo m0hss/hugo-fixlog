@@ -1,8 +1,8 @@
 name = "Fixlog"
 license = "MIT"
-licenselink = "https://github.com/m0hss/fixlog/blob/main/themes/fixlog/LICENSE"
+licenselink = "https://github.com/m0hss/hugo-fixlog/blob/main/LICENSE"
 description = "A dark terminal x lab-notebook theme for dev logs: outcome badges (worked, didn't work, in progress, still poking), a ⌘K command palette, a filterable archive, and a verified-facts status page."
-homepage = "https://github.com/m0hss/fixlog/tree/main/themes/fixlog"
+homepage = "https://github.com/m0hss/hugo-fixlog"
 demosite = "https://fixlog.run"
 tags = ["blog", "dark", "developer", "personal", "minimal", "responsive", "search", "tags", "rss", "syntax-highlighting"]
 features = ["outcome badges", "command palette search", "filterable archive", "status page", "animated hero", "code block copy", "table of contents", "RSS", "JSON index", "mobile tab bar"]

@@ -19,8 +19,8 @@ facts:
     value: "worked"
 sources:
   - kind: "repo"
-    ref: "m0hss/fixlog"
-    url: "https://github.com/m0hss/fixlog"
+    ref: "m0hss/hugo-fixlog"
+    url: "https://github.com/m0hss/hugo-fixlog"
     note: "theme source"
 ---
 
