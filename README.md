@@ -1,4 +1,4 @@
-# Fixlog: a Hugo theme for honest dev logs
+# Fixlog: a Hugo theme for unfiltered dev logs
 
 A dark "terminal × lab notebook" theme for developers who log experiments, wins, and dead ends. Every entry carries an outcome badge: **Worked**, **Didn't work**, **In progress**, or **Still poking**.
 
