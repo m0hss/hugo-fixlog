@@ -118,3 +118,28 @@ if (tocLinks.length && "IntersectionObserver" in window) {
   }, { rootMargin: "-80px 0px -70% 0px" });
   byId.forEach((_, id) => { const h = document.getElementById(id); if (h) io.observe(h); });
 }
+
+// Hero typer: types each ending, holds, erases, moves on. Static first ending with reduced motion.
+const typer = document.querySelector("[data-typer]");
+if (typer && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let words = [];
+  try { words = JSON.parse(typer.dataset.typer); } catch {}
+  const cursor = typer.nextElementSibling;
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const TYPE = 55, ERASE = 28, HOLD = 2500, GAP = 350;
+
+  (async () => {
+    if (words.length < 2) return;
+    for (let i = 0, first = true; ; i = (i + 1) % words.length, first = false) {
+      if (!first) {
+        cursor?.classList.add("solid");
+        for (const ch of words[i]) { typer.textContent += ch; await wait(TYPE); }
+      }
+      cursor?.classList.remove("solid");
+      await wait(HOLD);
+      cursor?.classList.add("solid");
+      while (typer.textContent) { typer.textContent = typer.textContent.slice(0, -1); await wait(ERASE); }
+      await wait(GAP);
+    }
+  })();
+}

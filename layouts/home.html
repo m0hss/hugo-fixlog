@@ -3,7 +3,12 @@
 <div class="wrap">
   <section class="hero">
     {{ with .Params.building }}<div class="building"><span class="pulse"></span>Currently building: <b>{{ . }}</b></div>{{ end }}
-    <h1>{{ .Params.tagline | default site.Title }}<span class="cursor" aria-hidden="true"></span></h1>
+    {{ $tagline := .Params.tagline | default site.Title }}
+    {{ with and .Params.taglinePrefix .Params.taglineEndings }}
+    <h1><span class="sr-only">{{ $tagline }}</span><span aria-hidden="true">{{ $.Params.taglinePrefix }} <span class="typer" data-typer="{{ $.Params.taglineEndings | jsonify }}">{{ index $.Params.taglineEndings 0 }}</span><span class="cursor"></span></span></h1>
+    {{ else }}
+    <h1>{{ $tagline }}<span class="cursor" aria-hidden="true"></span></h1>
+    {{ end }}
     <p class="lede">{{ with .Params.intro }}{{ . | markdownify }}{{ else }}{{ site.Params.description }}{{ end }}</p>
   </section>
 

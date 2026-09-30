@@ -153,6 +153,7 @@ a.card:hover, .card.is-link:hover { border-color: var(--line-2); background: var
 .eyebrow b { color: var(--lime); font-weight: 500; }
 .cursor { display: inline-block; width: .32em; height: .8em; margin-left: .12em; background: var(--lime); vertical-align: baseline; animation: blink 1.1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+.cursor.solid { animation: none; }
 @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
 
 /* ---------- Home ---------- */
@@ -167,7 +168,8 @@ a.card:hover, .card.is-link:hover { border-color: var(--line-2); background: var
 .hero h1 { font-size: 3rem; line-height: 3.5rem; letter-spacing: -0.03em; font-weight: 700; margin-bottom: 16px; }
 .hero .lede { color: var(--soft); font-size: 1.0625rem; line-height: 1.5rem; max-width: 560px; margin: 0; }
 .hero .lede strong { color: #fff; font-weight: 600; }
-@media (max-width: 767px) { .hero { padding-top: 16px; } .hero h1 { font-size: 2rem; line-height: 2.5rem; } }
+.hero h1:has(.typer) { min-height: 3.5rem; }
+@media (max-width: 767px) { .hero { padding-top: 16px; } .hero h1 { font-size: 2rem; line-height: 2.5rem; } .hero h1:has(.typer) { min-height: 5rem; } }
 
 .filter-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
 .query-hint { font: 500 .6875rem var(--font-mono); letter-spacing: .04em; color: var(--muted); }
