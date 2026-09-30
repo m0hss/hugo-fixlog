@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $d := site.Data.status }}
+{{ $d := site.Data.status | default dict }}
 {{ $svcs := $d.services | default slice }}
 {{ $down := where $svcs "state" "outage" }}
 {{ $deg := where $svcs "state" "degraded" }}

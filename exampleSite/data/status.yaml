@@ -1,0 +1,30 @@
+# SAMPLE DATA. Replace with verified facts only (what happened, impact, status, fix).
+# Never put internal hostnames, IPs, or credentials here.
+sample: true
+updated: "2026-09-29"
+window: "30 days"
+services:
+  - name: "Example service A"
+    url: "https://example.com"
+    description: "Sample entry."
+    state: "operational"          # operational | degraded | outage
+    probe: "HTTP GET /health"
+    uptime: "sample"
+    # One entry per day, oldest first: operational | degraded | outage | none (no data)
+    history: [operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, degraded, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational, operational]
+  - name: "Example service B"
+    description: "Sample entry."
+    state: "degraded"
+    note: "Sample note."
+incidents:
+  - id: "INC-SAMPLE-1"
+    date: "2026-09-01"
+    service: "Example service B"
+    title: "Sample incident"
+    status: "resolved"            # investigating | monitoring | resolved
+    duration: "sample"
+    impact: "Sample impact text."
+    cause: "Sample cause text."
+    cause_confirmed: false        # false renders "Not confirmed yet"
+    fix: "Sample fix text."
+    evidence: "Link or log reference that backs this entry."
