@@ -4,8 +4,6 @@ A dark "terminal × lab notebook" theme for developers who log experiments, wins
 
 ![Fixlog home](https://raw.githubusercontent.com/m0hss/hugo-fixlog/main/images/screenshot.png)
 
-Live site: [fixlog.run](https://fixlog.run)
-
 ## Features
 
 - Outcome badges plus client-side outcome filters on the home page and archive
